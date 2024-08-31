@@ -1,6 +1,3 @@
-PROJECT_NAME := "backend-event-tracker-lib"
-PKG := "github.com/yofio-mx/$(PROJECT_NAME)"
-
 .PHONY: linter
 
 linter: ## Executes the linter for reviewing the code health
@@ -12,7 +9,7 @@ test: unit-test linter## Execute all tests
 	@echo "Test run successfully"
 
 unit-test: ## Run unit tests
-	@go test -short ${PKG_LIST}
+	@go test -short ./...
 
 upgrade-deps: ## Upgrade all dependencies
 	@go get -u -t ./...
