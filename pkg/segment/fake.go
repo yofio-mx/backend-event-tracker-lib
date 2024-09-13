@@ -14,17 +14,21 @@ func NewFakeTracker() Trackable {
 
 func (f *fakeTracker) Track(ctx context.Context, eventName string, event Traceable, opts ...TrackOption) error {
 	if log.Ctx(ctx).GetLevel() < zerolog.InfoLevel {
+		trackOpts := trackOpts{}
+		for _, opt := range opts {
+			opt(&trackOpts)
+		}
 		log.Ctx(ctx).Debug().
 			Str("eventName", eventName).
 			Any("event.userProperties", event.UserProperties()).
 			Any("event.eventProperties", event.EventProperties()).
-			Any("opts", opts).
-			Msg("Tracking event")
+			Any("opts", trackOpts).
+			Msg("Fake tracking event")
 		return nil
 	}
 	log.Ctx(ctx).Info().
 		Str("eventName", eventName).
-		Msg("Enqueueing message")
+		Msg("Fake Enqueueing message")
 	return nil
 }
 
