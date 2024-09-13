@@ -83,7 +83,12 @@ func NewSegmentTracker(config SegmentTrackerConfig) (Trackable, error) {
 }
 
 func (st *segmentTracker) Track(ctx context.Context, eventName string, event Traceable, opts ...TrackOption) error {
-	log.Ctx(ctx).Debug().Msg("Starting to send event information to segment")
+	_logger := log.Ctx(ctx).With().
+		Str("EventName", eventName).
+		Logger()
+
+	_logger.Debug().
+		Msg("Starting to send event information to segment")
 
 	trackOpts := trackOpts{}
 	for _, opt := range opts {
@@ -102,10 +107,10 @@ func (st *segmentTracker) Track(ctx context.Context, eventName string, event Tra
 		}
 		err := st.client.Enqueue(m)
 		if err != nil {
-			log.Ctx(ctx).Error().Err(err).Msg("Error sending segment identify")
+			_logger.Error().Err(err).Msg("Error sending segment identify")
 			return err
 		}
-		log.Ctx(ctx).Debug().Msg("Identify message was enqueued successfully to segment")
+		_logger.Debug().Msg("Identify message was enqueued successfully to segment")
 	}
 	if event.EventProperties() != nil {
 		m := analytics.Track{
@@ -120,10 +125,10 @@ func (st *segmentTracker) Track(ctx context.Context, eventName string, event Tra
 		}
 		err := st.client.Enqueue(m)
 		if err != nil {
-			log.Ctx(ctx).Error().Err(err).Msg("Error sending segment track")
+			_logger.Error().Err(err).Msg("Error sending segment track")
 			return err
 		}
-		log.Ctx(ctx).Debug().Msg("Track message was enqueued successfully to segment")
+		_logger.Debug().Msg("Track message was enqueued successfully to segment")
 	}
 	return nil
 }
