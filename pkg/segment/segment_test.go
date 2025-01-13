@@ -66,7 +66,7 @@ func Test_Example_UserAndAnonID(t *testing.T) {
 func Test_Example_Email(t *testing.T) {
 	ctx := getLoggerCtx(true)
 	f, err := NewSegmentTracker(SegmentTrackerConfig{
-		APIKey: "test", // Put a valid API Key
+		APIKey: "test",
 	})
 	assert.NoError(t, err)
 	defer func() {
