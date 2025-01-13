@@ -29,7 +29,14 @@ func WithAnonymousID(anonymousID string) TrackOption {
 	}
 }
 
+func WithEmail(email string) TrackOption {
+	return func(o *trackOpts) {
+		o.email = email
+	}
+}
+
 type trackOpts struct {
 	anonymousID string
 	userID      string
+	email       string
 }
