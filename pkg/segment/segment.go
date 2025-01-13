@@ -3,9 +3,10 @@ package segment
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/rs/zerolog/log"
 	"github.com/segmentio/analytics-go"
-	"time"
 )
 
 var (
@@ -105,6 +106,9 @@ func (st *segmentTracker) Track(ctx context.Context, eventName string, event Tra
 		if trackOpts.anonymousID != "" {
 			m.AnonymousId = trackOpts.anonymousID
 		}
+		if trackOpts.email != "" {
+			m.UserId = trackOpts.email
+		}
 		err := st.client.Enqueue(m)
 		if err != nil {
 			_logger.Error().Err(err).Msg("Error sending segment identify")
@@ -122,6 +126,9 @@ func (st *segmentTracker) Track(ctx context.Context, eventName string, event Tra
 		}
 		if trackOpts.anonymousID != "" {
 			m.AnonymousId = trackOpts.anonymousID
+		}
+		if trackOpts.email != "" {
+			m.UserId = trackOpts.email
 		}
 		err := st.client.Enqueue(m)
 		if err != nil {
