@@ -41,8 +41,22 @@ type trackOpts struct {
 	email       string
 }
 
-func Apply(options ...TrackOption) {
+func (o *trackOpts) GetAnonymousID() string {
+	return o.anonymousID
+}
+
+func (o *trackOpts) GetUserID() string {
+	return o.userID
+}
+
+func (o *trackOpts) GetEmail() string {
+	return o.email
+}
+
+func Apply(options ...TrackOption) trackOpts {
+	opts := trackOpts{}
 	for _, option := range options {
-		option(&trackOpts)
+		option(&opts)
 	}
+	return opts
 }

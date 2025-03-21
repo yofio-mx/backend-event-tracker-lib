@@ -84,7 +84,7 @@ func NewSegmentTracker(config SegmentTrackerConfig) (track.Trackable, error) {
 	return &segmentTracker{client: client}, nil
 }
 
-func (st *segmentTracker) Track(ctx context.Context, eventName string, event Traceable, opts ...TrackOption) error {
+func (st *segmentTracker) Track(ctx context.Context, eventName string, event track.Traceable, opts ...track.TrackOption) error {
 	_logger := log.Ctx(ctx).With().
 		Str("EventName", eventName).
 		Logger()
