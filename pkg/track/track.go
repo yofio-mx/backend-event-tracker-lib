@@ -1,4 +1,4 @@
-package segment
+package track
 
 import (
 	"context"
@@ -39,4 +39,24 @@ type trackOpts struct {
 	anonymousID string
 	userID      string
 	email       string
+}
+
+func (o *trackOpts) GetAnonymousID() string {
+	return o.anonymousID
+}
+
+func (o *trackOpts) GetUserID() string {
+	return o.userID
+}
+
+func (o *trackOpts) GetEmail() string {
+	return o.email
+}
+
+func Apply(options ...TrackOption) trackOpts {
+	opts := trackOpts{}
+	for _, option := range options {
+		option(&opts)
+	}
+	return opts
 }
