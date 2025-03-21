@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/yofio-mx/backend-event-tracker-lib/pkg/track"
 )
 
 func Test_Example_UserID(t *testing.T) {
@@ -22,7 +23,7 @@ func Test_Example_UserID(t *testing.T) {
 	}, map[string]interface{}{
 		"key_event": "value_event",
 	})
-	assert.NoError(t, f.Track(ctx, eventName, event, WithUserID("123")))
+	assert.NoError(t, f.Track(ctx, eventName, event, track.WithUserID("123")))
 }
 
 func Test_Example_AnonID(t *testing.T) {
@@ -41,7 +42,7 @@ func Test_Example_AnonID(t *testing.T) {
 	}, map[string]interface{}{
 		"key_event": "value_event",
 	})
-	assert.NoError(t, f.Track(ctx, eventName, event, WithAnonymousID("456")))
+	assert.NoError(t, f.Track(ctx, eventName, event, track.WithAnonymousID("456")))
 }
 
 func Test_Example_UserAndAnonID(t *testing.T) {
@@ -60,7 +61,7 @@ func Test_Example_UserAndAnonID(t *testing.T) {
 	}, map[string]interface{}{
 		"key_event": "value_event",
 	})
-	assert.NoError(t, f.Track(ctx, eventName, event, WithUserID("123"), WithAnonymousID("123")))
+	assert.NoError(t, f.Track(ctx, eventName, event, track.WithUserID("123"), track.WithAnonymousID("123")))
 }
 
 func Test_Example_Email(t *testing.T) {
@@ -79,5 +80,5 @@ func Test_Example_Email(t *testing.T) {
 	}, map[string]interface{}{
 		"key_event": "value_event",
 	})
-	assert.NoError(t, f.Track(ctx, eventName, event, WithEmail("example@yofio.com")))
+	assert.NoError(t, f.Track(ctx, eventName, event, track.WithEmail("example@yofio.com")))
 }

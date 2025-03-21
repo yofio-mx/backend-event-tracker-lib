@@ -1,4 +1,4 @@
-package segment
+package rudderstack
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
-	"github.com/segmentio/analytics-go"
+	"github.com/rudderlabs/analytics-go"
 	"github.com/yofio-mx/backend-event-tracker-lib/pkg/track"
 )
 
@@ -14,7 +14,9 @@ var (
 	ErrAPIKeyNotProvided = fmt.Errorf("API Key or client must be provided")
 )
 
-type SegmentTrackerConfig struct {
+type RudderStackConfig struct {
+	// RudderStack URL
+	URL string
 	// API Key for connecting with Segment
 	APIKey string
 	// Segment client
@@ -31,7 +33,7 @@ type SegmentTrackerConfig struct {
 	BatchSize int
 }
 
-func (config *SegmentTrackerConfig) setDefaults() {
+func (config *RudderStackConfig) setDefaults() {
 	if config.Interval == 0 {
 		config.Interval = analytics.DefaultInterval
 	}
@@ -46,7 +48,7 @@ func (config *SegmentTrackerConfig) setDefaults() {
 	}
 }
 
-func (config *SegmentTrackerConfig) validate() error {
+func (config *RudderStackConfig) validate() error {
 	if config.APIKey == "" && config.Client == nil {
 		return ErrAPIKeyNotProvided
 	}
@@ -57,7 +59,7 @@ type segmentTracker struct {
 	client analytics.Client
 }
 
-func NewSegmentTracker(config SegmentTrackerConfig) (track.Trackable, error) {
+func NewRudderStackTracker(config RudderStackConfig) (track.Trackable, error) {
 	if config.Client != nil {
 		return &segmentTracker{client: config.Client}, nil
 	}
@@ -66,7 +68,7 @@ func NewSegmentTracker(config SegmentTrackerConfig) (track.Trackable, error) {
 		log.Error().Err(err).Msg("Error creating segment tracker")
 		return nil, err
 	}
-	client, err := analytics.NewWithConfig(config.APIKey, analytics.Config{
+	client, err := analytics.NewWithConfig(config.APIKey, config.URL, analytics.Config{
 		Interval:  config.Interval,
 		BatchSize: config.BatchSize,
 		DefaultContext: &analytics.Context{
@@ -84,7 +86,7 @@ func NewSegmentTracker(config SegmentTrackerConfig) (track.Trackable, error) {
 	return &segmentTracker{client: client}, nil
 }
 
-func (st *segmentTracker) Track(ctx context.Context, eventName string, event Traceable, opts ...TrackOption) error {
+func (st *segmentTracker) Track(ctx context.Context, eventName string, event track.Traceable, opts ...track.TrackOption) error {
 	_logger := log.Ctx(ctx).With().
 		Str("EventName", eventName).
 		Logger()

@@ -1,4 +1,4 @@
-package segment
+package track
 
 import (
 	"context"
@@ -39,4 +39,10 @@ type trackOpts struct {
 	anonymousID string
 	userID      string
 	email       string
+}
+
+func Apply(options ...TrackOption) {
+	for _, option := range options {
+		option(&trackOpts)
+	}
 }
