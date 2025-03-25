@@ -5,7 +5,7 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/yofio-mx/backend-event-tracker-lib/pkg/track"
+	"github.com/yofio-mx/backend-event-tracker-lib/v2/pkg/track"
 )
 
 type fakeTracker struct{}

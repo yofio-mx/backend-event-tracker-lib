@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/yofio-mx/backend-event-tracker-lib/pkg/track"
+	"github.com/yofio-mx/backend-event-tracker-lib/v2/pkg/track"
 )
 
 func Test_Example_UserID(t *testing.T) {

@@ -8,7 +8,7 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
-	"github.com/yofio-mx/backend-event-tracker-lib/pkg/track"
+	"github.com/yofio-mx/backend-event-tracker-lib/v2/pkg/track"
 )
 
 func getLoggerCtx(isDebug bool) context.Context {
