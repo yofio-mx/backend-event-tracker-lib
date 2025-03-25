@@ -1,4 +1,4 @@
-module github.com/yofio-mx/backend-event-tracker-lib
+module github.com/yofio-mx/backend-event-tracker-lib/v2
 
 go 1.22.6
 
@@ -6,6 +6,7 @@ require (
 	github.com/rs/zerolog v1.33.0
 	github.com/segmentio/analytics-go v3.1.0+incompatible
 	github.com/stretchr/testify v1.9.0
+	github.com/yofio-mx/backend-event-tracker-lib v1.0.4
 )
 
 require (
